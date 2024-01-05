@@ -1,5 +1,6 @@
 
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import Task from './components/Task';
 
 export default function App() {
   return (
@@ -11,8 +12,9 @@ export default function App() {
         <Text style={styles.header}>Today's Task</Text>
 
 
-        <View>
-
+        <View style={styles.item}>
+            <Task text= "todo-1"/>
+            <Task text= "todo-1"/>
         </View>
       </View>
       
@@ -25,9 +27,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E8EAED',
   },
+  item:{
+    marginTop:10
+  },
   taskContainer:{
     paddingTop:80,
-    paddingHorizontal:20
+    paddingHorizontal:20,
+    marginTop:10
   },
   header:{
     fontSize:24,
