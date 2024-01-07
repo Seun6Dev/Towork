@@ -1,8 +1,19 @@
-
-import { StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, Platform, TextInput, Pressable } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, Platform, TextInput, Pressable, Keyboard } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
+
+  const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
+
+  const handleTask = ()=>{
+    Keyboard.dismiss();
+    setTaskItems([...taskItems, task]);
+    setTask(null);
+
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.taskContainer}>
@@ -13,8 +24,11 @@ export default function App() {
 
 
         <View style={styles.item}>
-            <Task text= "todo-1"/>
-            <Task text= "todo-2"/>
+            {
+              taskItems.map((item, index)=>{
+                return <Task key= {index} text={item}/>
+              })
+            }
         </View>
       </View>
       
@@ -22,8 +36,9 @@ export default function App() {
       behavior={Platform.OS === "ios" ? 'padding': 'height'}
       style={styles.inputWrapper}
       >
-        <TextInput placeholder='Write your task' style={styles.input}/>
-        <Pressable style={styles.btn}>
+        <TextInput placeholder='Write your task' style={styles.input} 
+        value={task} onChangeText={(text)=>{setTask(text)}}/>
+        <Pressable style={styles.btn} onPress={handleTask}>
           <View style={styles.addWrapper}>
             <Text style={styles.add}>+</Text>
           </View>
@@ -67,7 +82,8 @@ const styles = StyleSheet.create({
     borderRadius:50,
     borderColor:"#D3D3D3",
     borderWidth:1,
-    width:250
+    width:250,
+    marginLeft:20
   },
   addWrapper:{
     width:60,
