@@ -14,6 +14,11 @@ export default function App() {
 
   }
 
+  const completeTask = (index)=>{
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy)
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.taskContainer}>
@@ -26,7 +31,11 @@ export default function App() {
         <View style={styles.item}>
             {
               taskItems.map((item, index)=>{
-                return <Task key= {index} text={item}/>
+                return (
+                  <Pressable key= {index} onPress={()=>{completeTask(index)}}>
+                    <Task  text={item}/>
+                  </Pressable>
+                )
               })
             }
         </View>
